@@ -25,39 +25,73 @@ const Spotify = {
     },
     async getTopTracks() {
         const accessToken = Spotify.getAccessToken();
-        const type = 'artists';
+        let type = 'artists';
         let artistData = [];
         let timeRange = '';
         
-        for (let i = 0; i < 3; i++) {
-        
-        switch (i){
+        for (let u = 0; u < 2; u ++){
+
+        switch (u){
             case 0 :
-                timeRange = 'long_term';
+                type = 'artists'
                 break;
             case 1 :
-                timeRange = 'medium_term';
-                break;
-            case 2 :
-                timeRange = 'short_term';
+                type = 'tracks'
                 break;
             default :
-                 return;
+                return;
         }
+            for (let i = 0; i < 3; i++) {
+        
+                switch (i){
+                    case 0 :
+                        timeRange = 'long_term';
+                        break;
+                    case 1 :
+                        timeRange = 'medium_term';
+                        break;
+                    case 2 :
+                        timeRange = 'short_term';
+                        break;
+                    default :
+                        return;
+                }
 
             await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${timeRange}&limit=50`, 
-            { headers : {
-                Authorization : `Bearer ${accessToken}`
-            } }).then(response => {
-                return response.json();
-            }).then(jsonResponse => {
-                artistData.push({timeRange: jsonResponse});
+                { headers : {
+                    Authorization : `Bearer ${accessToken}`
+                } }).then(response => {
+                    return response.json();
+                }).then(jsonResponse => {
+                    console.log(jsonResponse);
+                    if (jsonResponse.items[0].type === 'artist'){
+                        artistData.push(jsonResponse.items.map( artist => ({
+                            name: artist.name,
+                            rank: null,
+                            href: artist.href,
+                            genres: artist.genres,
+                            popularity: artist.popularity,
+                            type: artist.type,
+                            images: artist.images,
+                            uri: artist.uri
+                    })));} else if (jsonResponse.items[0].type === 'track'){
+                        artistData.push(jsonResponse.items.map( artist => ({
+                            name: artist.name,
+                            artists: artist.artists,
+                            rank: null,
+                            id: artist.id,
+                            href: artist.href,
+                            popularity: artist.popularity,
+                            type: artist.type,
+                            uri: artist.uri
+                    })))
+                    };
             });
         }
+    }
         console.log(artistData);
         return artistData;
     }
-
 }
 
 export default Spotify;

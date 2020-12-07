@@ -73,23 +73,27 @@ const Spotify = {
                             popularity: artist.popularity,
                             type: artist.type,
                             images: artist.images,
-                            uri: artist.uri
+                            uri: artist.uri,
+                            URL: artist.external_urls
                     })));} else if (jsonResponse.items[0].type === 'track'){
                         artistData.push(jsonResponse.items.map( artist => ({
                             name: artist.name,
                             artists: artist.artists,
+                            releaseDay: artist.album.relase_day,
                             rank: null,
                             id: artist.id,
                             href: artist.href,
                             popularity: artist.popularity,
                             type: artist.type,
-                            uri: artist.uri
+                            images: artist.album.images,
+                            uri: artist.uri,
+                            URL: artist.exernal_urls,
+                            previewURL: artist.preview_url
                     })))
                     };
             });
         }
     }
-        console.log(artistData);
         return artistData;
     }
 }

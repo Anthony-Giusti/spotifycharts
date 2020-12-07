@@ -34,6 +34,24 @@ const Login = props => {
                 onClick={props.sortByPlays}
                 >Sort By Most Plays</button>
             </div>
+            <div>
+                <button
+                    id='maxLength5' 
+                    onClick={props.changeMaxLength}>
+                    5</button>
+                <button
+                    id='maxLength10' 
+                    onClick={props.changeMaxLength}>
+                    10</button>
+                <button
+                    id='maxLength25' 
+                    onClick={props.changeMaxLength}>
+                    25</button>
+                <button
+                    id='maxLength50' 
+                    onClick={props.changeMaxLength}>
+                    50</button>
+            </div>
         </div>
     )
 }

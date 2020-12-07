@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import { cloneDeep } from 'lodash';
 
 import Spotify from '../../util/spotify.js' 
 
@@ -7,12 +8,12 @@ import Ranking from '../Ranking/Ranking';
 
 const App = () => {
 const [sortedArtists, setSortedArtists] = useState([]);
-const [sortedSongs, setSortedSongs] = useState([]);
+const [sortedTracks, setSortedTracks] = useState([]);
 const [timeRange, setTimeRange] = useState(0);
-const [maxLength, setMaxLength] = useState(10);
+const [maxLength, setMaxLength] = useState(5);
 
-    const changeTimeRange = timeRange => {
-        switch (timeRange){
+    const changeTimeRange = e => {
+        switch (e.target.id){
             case 'farTimeRange' :
                 setTimeRange(0);
                 break;
@@ -24,6 +25,27 @@ const [maxLength, setMaxLength] = useState(10);
                 break;
             default :
                 setTimeRange(0);
+
+        }
+    }
+
+    const changeMaxLength = e => {
+        console.log(e.target.id);
+        switch (e.target.id){
+            case 'maxLength5' :
+                setMaxLength(5);
+                break;
+            case 'maxLength10' :
+                setMaxLength(10);
+                break;
+            case 'maxLength25' :
+                setMaxLength(25);
+                break;
+            case 'maxLength50' :
+                setMaxLength(50);
+                break;
+            default :
+                setMaxLength(5);
 
         }
     }
@@ -41,6 +63,7 @@ const [maxLength, setMaxLength] = useState(10);
         for (let i = 0; i < sort.length; i++){
             sort[i].sort((a, b) => a.rank - b.rank);
             }
+        // sort.map( x => x.slice(0, 10));   
         setSortedArtists(sort);
     }
 
@@ -51,7 +74,8 @@ const [maxLength, setMaxLength] = useState(10);
                     spotifyResponse[a][b].rank = b + 1;
                 }
             }
-            setSortedArtists(spotifyResponse);
+            setSortedArtists(spotifyResponse.splice(0, 3));
+            setSortedTracks(spotifyResponse);
             });
     }
 
@@ -63,10 +87,13 @@ const [maxLength, setMaxLength] = useState(10);
                 sortByPlays={sortByPlays}
                 sortByPopularity={sortByPopularity}
                 changeTimeRange={changeTimeRange}
-                timeRange={timeRange}/>
+                timeRange={timeRange}
+                changeMaxLength={changeMaxLength}/>
             <Ranking
                 sortedArtists={sortedArtists}
                 timeRange={timeRange}
+                sortedTracks={sortedTracks}
+                maxLength={maxLength}
                />
         </div>
     )

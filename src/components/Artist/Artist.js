@@ -1,18 +1,22 @@
 import React from 'react';
 import './Artist.css';
 
+
 const Artist = props => {
         return (
             <div className='artist'>
-                <div>
-                    <img className='artistPhoto' 
+                    <div className='artistPhotoContainer'>
+                    <img className='artistPhoto'
                         src={props.artist.images[0].url}></img>
-                    <div>
-                        <h3>{props.artist.name}</h3>
-                        <p className='artistsGenres'></p>
+                    </div> 
+                    <div className='artistInfo'>
+                        <h3><a href={props.artist.artistURL}>{props.artist.name}</a></h3>
+                        <p className='artistGenres'>{props.artist.genres}</p>
+                        <p>Spotify Followers: {props.artist.followers}</p>
+                        <p>Spotify Popularity Rating: {props.artist.popularity}</p>
                     </div>
                    
-                </div>
+                
 
             </div>
         )

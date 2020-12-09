@@ -5,19 +5,24 @@ import './Ranking.css';
 
 
 const Ranking = props => {
-    console.log(props.sortedArtists);
+    // console.log(props.sortedArtists);
     return (
+        <div><h2>Ranks</h2>
         <div className='rankings'>
-            <h3 >Most Played Artists Ranking</h3>
             <Artists
+                sortByPlays={props.sortByPlays}
+                sortByPopularity={props.sortByPopularity}
                 sortedArtists={props.sortedArtists}
                 timeRange={props.timeRange}
                 maxLength={props.maxLength}
                 />
             <Tracks 
+                sortByPlays={props.sortByPlays}
+                sortByPopularity={props.sortByPopularity}
                 sortedTracks={props.sortedTracks}
                 timeRange={props.timeRange}
                 maxLength={props.maxLength}/>
+        </div>
         </div>
     )
 }

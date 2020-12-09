@@ -1,4 +1,9 @@
 .rankings {
-    width: 70%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
 
+.sortButtons {
+   text-align: center;
 }

@@ -1,3 +1,5 @@
+import Artist from "../components/Artist/Artist";
+
 const clientId = '1552527e4fb6490facd4fd8f368a6205';
 const redirectUri = 'http://localhost:3000/';
 let accessToken;
@@ -63,32 +65,41 @@ const Spotify = {
                 } }).then(response => {
                     return response.json();
                 }).then(jsonResponse => {
-                    console.log(jsonResponse);
+                    // console.log(jsonResponse);
+                    if(jsonResponse.items <= 0){
+                        return;
+                    }
                     if (jsonResponse.items[0].type === 'artist'){
                         artistData.push(jsonResponse.items.map( artist => ({
                             name: artist.name,
                             rank: null,
                             href: artist.href,
-                            genres: artist.genres,
+                            genres: artist.genres.slice(0, 4)
+                                .map(genre => genre[0].toUpperCase() + genre.substr(1))
+                                .join(' • '),
+                            genresRaw: artist.genres,
+                            followers: artist.followers.total,
                             popularity: artist.popularity,
                             type: artist.type,
                             images: artist.images,
                             uri: artist.uri,
-                            URL: artist.external_urls
+                            artistURL: artist.external_urls.spotify
                     })));} else if (jsonResponse.items[0].type === 'track'){
-                        artistData.push(jsonResponse.items.map( artist => ({
-                            name: artist.name,
-                            artists: artist.artists,
-                            releaseDay: artist.album.relase_day,
+                        artistData.push(jsonResponse.items.map( track => ({
+                            name: track.name,
+                            artists: track.artists,
+                            albumName: track.album.name,
+                            releaseYear: track.album.release_date.slice(0, 4),
                             rank: null,
-                            id: artist.id,
-                            href: artist.href,
-                            popularity: artist.popularity,
-                            type: artist.type,
-                            images: artist.album.images,
-                            uri: artist.uri,
-                            URL: artist.exernal_urls,
-                            previewURL: artist.preview_url
+                            id: track.id,
+                            href: track.href,
+                            popularity: track.popularity,
+                            type: track.type,
+                            images: track.album.images,
+                            uri: track.uri,
+                            trackURL: track.external_urls.spotify,
+                            albumURL: track.album.external_urls.spotify,
+                            previewURL: track.preview_url
                     })))
                     };
             });

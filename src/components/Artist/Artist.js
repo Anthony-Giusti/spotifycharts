@@ -10,7 +10,7 @@ const Artist = props => {
                         src={props.artist.images[0].url}></img>
                     </div> 
                     <div className='artistInfo'>
-                        <h3><a href={props.artist.artistURL}>{props.artist.name}</a></h3>
+                        <h3><a href={props.artist.artistURL} target='_blank'>{props.artist.name}</a></h3>
                         <p className='artistGenres'>{props.artist.genres}</p>
                         <p>Spotify Followers: {props.artist.followers}</p>
                         <p>Spotify Popularity Rating: {props.artist.popularity}</p>

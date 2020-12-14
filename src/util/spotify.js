@@ -1,5 +1,3 @@
-import Artist from "../components/Artist/Artist";
-
 const clientId = '1552527e4fb6490facd4fd8f368a6205';
 const redirectUri = 'http://localhost:3000/';
 let accessToken;
@@ -77,7 +75,8 @@ const Spotify = {
                             genres: artist.genres.slice(0, 4)
                                 .map(genre => genre[0].toUpperCase() + genre.substr(1))
                                 .join(' • '),
-                            genresRaw: artist.genres,
+                            genresRaw: artist.genres
+                                .map(genre => genre[0].toUpperCase() + genre.substr(1)),
                             followers: artist.followers.total,
                             popularity: artist.popularity,
                             type: artist.type,

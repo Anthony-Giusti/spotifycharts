@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import Chart from 'chart.js';
 
 import Spotify from '../../util/spotify.js' 
 
 import Login from '../login/login';
 import Ranking from '../Ranking/Ranking';
-import GenreChart from '../GenreChart/GenreChart'
+import Stats from '../Stats/Stats';
 
 const App = () => {
 const [sortedArtists, setSortedArtists] = useState([]);
@@ -13,6 +12,8 @@ const [sortedTracks, setSortedTracks] = useState([]);
 const [sortedGenres, setSortedGenres] = useState([]);
 const [timeRange, setTimeRange] = useState(0);
 const [maxLength, setMaxLength] = useState(5);
+const [averageArtistPopularity, setAverageArtistPopularity] = useState();
+const [averageTrackPopularity, setAverageTrackPopularity] = useState()
 
     const changeTimeRange = e => {
         switch (e.target.id){
@@ -87,61 +88,53 @@ const [maxLength, setMaxLength] = useState(5);
     }
 
     const getFavoirteGenres = () => {
+        let returnedGenres = [];
         let favGenres = [];
+        let artistsPopularity = [];
+        let tracksPopularity = [];
+        const reducer = (acc, cur) => acc + cur;
+
         for (let i = 0; i < sortedArtists.length; i++){
+            returnedGenres.push([[],[]]);
             if (favGenres[i] === undefined){
                     favGenres[i] = {};
                 }
+            if (artistsPopularity[i] === undefined) {
+                artistsPopularity[i] = [];
+            }
+            if (tracksPopularity[i] === undefined) {
+                tracksPopularity[i] = [];
+            }
+
             for (let j = 0; j < sortedArtists[i].length; j++){
                 for (let k = 0; k < sortedArtists[i][j].genresRaw.length; k++){
                     favGenres[i][sortedArtists[i][j].genresRaw[k]] = 
                     (favGenres[i][sortedArtists[i][j].genresRaw[k]] || 0) + 1;
                 }
+                artistsPopularity[i].push(sortedArtists[i][j].popularity);
+                tracksPopularity[i].push(sortedTracks[i][j].popularity);
             }
+            let sort = Object.fromEntries(Object.entries
+                (favGenres[i]).sort(([,a],[,b]) => b-a));
+            for (const [key, value] of Object.entries(sort)){
+                returnedGenres[i][0].push(key);
+                returnedGenres[i][1].push(value);
+            }
+            favGenres[i] = sort;  
+            
+            artistsPopularity[i] = artistsPopularity[i].reduce(reducer) / artistsPopularity[i].length;
+            tracksPopularity[i] = tracksPopularity[i].reduce(reducer) / tracksPopularity[i].length;
+            console.log(tracksPopularity);
+            console.log(artistsPopularity);
+            
         }
-    setSortedGenres(favGenres);
+        setSortedGenres(returnedGenres);
     }
 
-    const generateGenreChart = () =>{
-         let testChart = document.getElementById('genreChart');
-
-         var genreChart = new Chart(testChart, {
-            type: 'bar',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-        return(genreChart);
+    const getPopularityStats = () => {
+        const reducer = (acc, cur) => acc + cur;
+        console.log(sortedArtists[timeRange]);
+        // setAverageArtistPopularity(sortedArtists[timeRange].reduce(reducer) / sortedArtists[timeRange]);
     }
 
     const getSpotifyData = () => {
@@ -154,6 +147,7 @@ const [maxLength, setMaxLength] = useState(5);
             setSortedArtists(spotifyResponse.splice(0, 3));
             setSortedTracks(spotifyResponse);
             getFavoirteGenres();
+            // getPopularityStats();
             });
     }
 
@@ -167,9 +161,10 @@ const [maxLength, setMaxLength] = useState(5);
                 changeTimeRange={changeTimeRange}
                 timeRange={timeRange}
                 changeMaxLength={changeMaxLength}/>
-            <GenreChart 
+            <Stats 
                 sortedGenres={sortedGenres}
-                generateGenreChart={generateGenreChart}
+                timeRange={timeRange}
+                averageArtistPopularity={averageArtistPopularity}
                 />
             <Ranking
                 sortedGenres={sortedGenres}

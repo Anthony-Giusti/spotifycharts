@@ -5,7 +5,6 @@ import './Ranking.css';
 
 
 const Ranking = props => {
-    // console.log(props.sortedArtists);
     return (
         <div><h2>Ranks</h2>
         <div className='rankings'>

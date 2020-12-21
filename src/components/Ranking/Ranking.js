@@ -5,8 +5,39 @@ import './Ranking.css';
 
 
 const Ranking = props => {
+
+    const handleCLick = e => {
+        let buttons = document.getElementsByClassName('lengthBtn');
+        Array.from(buttons).forEach(btn => btn.classList.remove('btnSelected'));
+        props.changeMaxLength(e);
+        document.getElementById(e.target.id).classList.add('btnSelected');
+    }
+
     return (
-        <div><h2>Ranks</h2>
+        <div className='rankingsContainer'>
+        <hr></hr>
+        <div className='lengthBtnContainer'> 
+                <button
+                    className='lengthBtn btnSelected'
+                    id='maxLength5' 
+                    onClick={handleCLick}>
+                    Show 5 Items</button>
+                <button
+                    className='lengthBtn'
+                    id='maxLength10' 
+                    onClick={handleCLick}>
+                    Show 10 Items</button>
+                <button
+                    className='lengthBtn'
+                    id='maxLength25' 
+                    onClick={handleCLick}>
+                    Show 25 Items</button>
+                <button
+                    className='lengthBtn'
+                    id='maxLength50' 
+                    onClick={handleCLick}>
+                    Show 50 Items </button>
+        </div>
         <div className='rankings'>
             <Artists
                 sortByPlays={props.sortByPlays}

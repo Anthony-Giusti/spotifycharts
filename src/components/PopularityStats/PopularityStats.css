@@ -1,0 +1,24 @@
+.popularityStatsContainer {
+    flex-grow: 1;
+    text-align: center;
+    min-width: 15em;
+}
+
+.popularityStatsContainer h3{
+    font-size: 1.3em;
+    margin: .2em auto;
+}
+
+.popularityStatsContainer p{
+    font-size: 1.1em;
+}
+
+.genreRanking {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.popularityStatsContainer hr {
+    max-width: 11em;
+}

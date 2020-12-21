@@ -1,0 +1,79 @@
+/* *{
+      outline: solid white 2px;
+  } */
+
+:root {
+    --ff-primary: 'Source Sans Pro', sans-serif;
+    --ff-secondary: 'Source Sans Pro', monospace;
+
+    --fw-reg: 300;
+    --fw-bold: 600;
+
+    --clr-light: #fff;
+    --clr-dark: #303030;
+    --btn-hover-light: rgba(0, 0, 35, 0.10);
+    --btn-hover-dark: rgba(98, 98, 128, 0.15);
+    /* --clr-accent: #16e0bd; */
+
+    --fs-h1: 3rem;
+    --fs-h2: 2.25rem;
+    --fs-h3: 1.25rem;
+    --fs-body: 1rem;
+
+    --bs:0.25em 0.25em 0.75em rgba(0,0,0,.25),
+         0.125em 0.125em 0.25em rgba(0,0,0,.15);
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--clr-light);
+    color: var(--clr-dark);
+    margin: 0;
+    font-family: var(--ff-primary);
+    font-size: var(--fs-body);
+    line-height: 1.6;
+}
+
+button {
+    padding:0.35em 1.2em;
+    border:0.1em solid #FFFFFF;
+    margin:0.3em 0.3em 0.3em 0.3em;
+    /* border-radius:0.12em; */
+    /* box-sizing: border-box; */
+    /* text-decoration:none; */
+    /* font-weight:300; */
+    /* color: black; */
+    text-align:center;
+    transition: all 0.15s;
+}
+
+button:hover {
+background-color: var(--btn-hover-light);
+-webkit-transform: scale(1.04);
+}
+
+.btnSelected {
+    border: 2px solid black;
+}
+
+
+main {
+    margin: 0 auto;
+    width: 95%;
+}
+
+h3 {
+    margin: 1em 0;
+}
+
+@media only screen and (max-width: 1400px) {
+    .app {
+        /* display: flex;
+        flex-direction: column; */
+    }
+}
+

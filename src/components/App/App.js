@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import Spotify from '../../util/spotify.js' 
-
-import Login from '../login/login';
+import Spotify from '../../util/spotify';
 import Ranking from '../Ranking/Ranking';
 import Stats from '../Stats/Stats';
+import { exampleSortedArtists, exampleSortedTracks } from '../../util/exampleData'
+
+import '../../normalize.css';
+import './app.css';
 
 const App = () => {
 const [sortedArtists, setSortedArtists] = useState([]);
@@ -13,7 +15,7 @@ const [sortedGenres, setSortedGenres] = useState([]);
 const [timeRange, setTimeRange] = useState(0);
 const [maxLength, setMaxLength] = useState(5);
 const [averageArtistPopularity, setAverageArtistPopularity] = useState();
-const [averageTrackPopularity, setAverageTrackPopularity] = useState()
+const [averageTrackPopularity, setAverageTrackPopularity] = useState();
 
     const changeTimeRange = e => {
         switch (e.target.id){
@@ -32,7 +34,6 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState()
     }
 
     const changeMaxLength = e => {
-        console.log(e.target.id);
         switch (e.target.id){
             case 'maxLength5' :
                 setMaxLength(5);
@@ -54,10 +55,10 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState()
     const sortByPopularity = e => {
         let sortTarget;
         let sort = [];
-        if (e.target.id === 'sortArtistsPopularity') {
+        if (e.target.id === 'sortArtistsPopularityBtn') {
             sort = [...sortedArtists];
             sortTarget = setSortedArtists;
-        } else if (e.target.id === 'sortTracksPopularity'){
+        } else if (e.target.id === 'sortTracksPopularityBtn'){
             sort = [...sortedTracks];
             sortTarget = setSortedTracks;
         } else {
@@ -72,10 +73,10 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState()
     const sortByPlays = e => {
         let sortTarget;
         let sort = [];
-        if (e.target.id === 'sortArtistsPlaysButton'){
+        if (e.target.id === 'sortArtistsPlaysBtn'){
             sort = [...sortedArtists];
             sortTarget = setSortedArtists;
-        } else if (e.target.id === 'sortTracksPlaysButton'){
+        } else if (e.target.id === 'sortTracksPlaysBtn'){
             sort = [...sortedTracks];
             sortTarget = setSortedTracks;
         } else {
@@ -88,10 +89,12 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState()
     }
 
     const getFavoirteGenres = () => {
+        console.log(sortedArtists);
         let returnedGenres = [];
         let favGenres = [];
         let artistsPopularity = [];
         let tracksPopularity = [];
+        
         const reducer = (acc, cur) => acc + cur;
 
         for (let i = 0; i < sortedArtists.length; i++){
@@ -115,26 +118,20 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState()
                 tracksPopularity[i].push(sortedTracks[i][j].popularity);
             }
             let sort = Object.fromEntries(Object.entries
-                (favGenres[i]).sort(([,a],[,b]) => b-a));
+                (favGenres[i]).sort(([,a],[,b]) => b - a));
             for (const [key, value] of Object.entries(sort)){
                 returnedGenres[i][0].push(key);
                 returnedGenres[i][1].push(value);
             }
             favGenres[i] = sort;  
             
-            artistsPopularity[i] = artistsPopularity[i].reduce(reducer) / artistsPopularity[i].length;
-            tracksPopularity[i] = tracksPopularity[i].reduce(reducer) / tracksPopularity[i].length;
-            console.log(tracksPopularity);
-            console.log(artistsPopularity);
+            artistsPopularity[i] = Math.round(artistsPopularity[i].reduce(reducer) / artistsPopularity[i].length);
+            tracksPopularity[i] = Math.round(tracksPopularity[i].reduce(reducer) / tracksPopularity[i].length);
+            setAverageTrackPopularity(tracksPopularity);
+            setAverageArtistPopularity(artistsPopularity);
             
         }
         setSortedGenres(returnedGenres);
-    }
-
-    const getPopularityStats = () => {
-        const reducer = (acc, cur) => acc + cur;
-        console.log(sortedArtists[timeRange]);
-        // setAverageArtistPopularity(sortedArtists[timeRange].reduce(reducer) / sortedArtists[timeRange]);
     }
 
     const getSpotifyData = () => {
@@ -146,25 +143,31 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState()
             }
             setSortedArtists(spotifyResponse.splice(0, 3));
             setSortedTracks(spotifyResponse);
-            getFavoirteGenres();
-            // getPopularityStats();
+            console.log(sortedArtists);
             });
     }
 
+    const getExampleData = () => {
+        setSortedArtists(exampleSortedArtists);
+        setSortedTracks(exampleSortedTracks);
+    }
+
+    useEffect(() => {
+           getFavoirteGenres();
+        }, [sortedTracks]);
+        
+
     return (
-        <div>
-            <Login 
-                sortedArtists={sortedArtists}
-                getSpotifyData={getSpotifyData}
-                sortByPlays={sortByPlays}
-                sortByPopularity={sortByPopularity}
-                changeTimeRange={changeTimeRange}
-                timeRange={timeRange}
-                changeMaxLength={changeMaxLength}/>
+        <div className='app'>
             <Stats 
                 sortedGenres={sortedGenres}
                 timeRange={timeRange}
                 averageArtistPopularity={averageArtistPopularity}
+                averageTrackPopularity={averageTrackPopularity}
+                changeTimeRange={changeTimeRange}
+                getSpotifyData={getSpotifyData}
+                timeRange={timeRange}
+                getExampleData={getExampleData}
                 />
             <Ranking
                 sortedGenres={sortedGenres}
@@ -173,7 +176,8 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState()
                 sortedArtists={sortedArtists}
                 timeRange={timeRange}
                 sortedTracks={sortedTracks}
-                maxLength={maxLength}/>
+                maxLength={maxLength}
+                changeMaxLength={changeMaxLength}/>
         </div>
     )
 }

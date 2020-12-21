@@ -3,9 +3,18 @@ import Track from '../Track/Track';
 import './Tracks.css';
 
 const Tracks = props => {
-    // console.log(props.sortedTracks);
-    // console.log([props.timeRange]);
-    // console.log(props.sortedTracks[[props.timeRange]])
+    const handleCLick = e => {
+        let buttons = document.getElementsByClassName('trackSortBtn');
+        if(e.target.id === 'sortTracksPlaysBtn') {
+            props.sortByPlays(e);
+        } else if (e.target.id === 'sortTracksPopularityBtn') {
+            props.sortByPopularity(e);
+        }
+
+        Array.from(buttons).forEach(btn => btn.classList.remove('btnSelected'));
+        document.getElementById(e.target.id).classList.add('btnSelected');
+    }
+    
     if (props.sortedTracks.length === 0) {
         return <p>No data loaded yet...</p>
     } else {
@@ -16,11 +25,17 @@ const Tracks = props => {
             </div>
             <div className='trackButtons sortButtons'>
                 <button 
-                    id='sortTracksPlaysButton'
-                    onClick={props.sortByPlays}>Sort by Most Plays</button>
+                    className='trackSortBtn btnSelected'
+                    id='sortTracksPlaysBtn'
+                    onClick={handleCLick}>
+                        Sort by Most Plays
+                </button>
                 <button
-                    id='sortTracksPopularity'
-                    onClick={props.sortByPopularity}>Sort by Popularity</button>
+                    className='trackSortBtn'
+                    id='sortTracksPopularityBtn'
+                    onClick={handleCLick}>
+                        Sort by Popularity
+                </button>
             </div>
             <div>
                 {

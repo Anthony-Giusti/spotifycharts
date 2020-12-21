@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import Chart from 'chart.js';
 import './GenreChart.css'
 
+const reducer = (acc, cur) => acc + cur;
 let gerneChart;
 let genreNames = null;
 let genreAmounts = null;
+let genreAmountsTotal;
 
 Chart.defaults.global.defaultFontFamily = "'PT Sans', sans-serif"
 Chart.defaults.global.legend.display = false;
@@ -32,6 +34,8 @@ class GenreChart extends Component{
             genreAmounts = genreData[1].slice(0, 15);
         }
         genreNames = genreData[0].slice(0, genreAmounts.length);
+        genreAmountsTotal = genreAmounts.reduce(reducer);
+        console.log(genreAmountsTotal);
         
         if (typeof gerneChart !== "undefined") gerneChart.destroy();
 
@@ -40,7 +44,7 @@ class GenreChart extends Component{
     data: {
         labels: genreNames, 
         datasets: [{
-            label: '# of Votes',
+            label: '',
             data: genreAmounts,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.7)',
@@ -64,16 +68,29 @@ class GenreChart extends Component{
         }]
     },
     options: {
+        tooltips: {
+            mode: 'index',
+            callbacks: {
+                label: function(tooltipItems, data) {
+                    return data.labels[tooltipItems.index] + ' ' + 
+                    Math.round(((data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] 
+                        / genreAmountsTotal * 100) + Number.EPSILON ) * 100) / 100 + '%';
+                }
+            }
+            
+        }
     }
 });
 
     }
 
     render() {
-        console.log(genreNames);
+        console.log(this.props.sortedGenres);
         let chartHeader;
-        if (genreNames == null) {
-            chartHeader = 'No genre data loaded...'
+        if (this.props.sortedGenres.length === 0) {
+            chartHeader = 'No data loaded yet...'
+        } else if (this.props.sortedGenres.length[0] < 10) {
+            chartHeader = 'No enough data available for chart'
         } else {
             chartHeader = 'Genre Chart'
         }
@@ -81,6 +98,8 @@ class GenreChart extends Component{
                 <div className='chartContainer'>
                     <h2>{chartHeader}</h2>
                     <canvas
+                        width="100%" 
+                        height="100%"
                         id="genreChart"
                         ref={this.chartRef}
                         />

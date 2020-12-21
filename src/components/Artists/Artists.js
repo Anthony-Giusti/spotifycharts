@@ -4,6 +4,20 @@ import './Artists.css';
 import '../Ranking/Ranking.css'
 
 const Artists = props => {
+    const handleCLick = e => {
+        let buttons = document.getElementsByClassName('artistsSortBtn');
+        console.log(e.target.id);
+        if(e.target.id === 'sortArtistsPlaysBtn') {
+            props.sortByPlays(e);
+        } else if (e.target.id === 'sortArtistsPopularityBtn') {
+            props.sortByPopularity(e);
+        }
+
+        Array.from(buttons).forEach(btn => btn.classList.remove('btnSelected'));
+        document.getElementById(e.target.id).classList.add('btnSelected');
+    }
+
+
     if (props.sortedArtists.length === 0) {
         return <p>No data loaded yet...</p>
     } else {
@@ -14,12 +28,17 @@ const Artists = props => {
                 </div>
                 <div className='artistButtons sortButtons'>
                     <button 
-                        id="sortArtistsPlaysButton"
-                        onClick={props.sortByPlays}
-                        >Sort by Most Plays</button>
+                        className='artistsSortBtn btnSelected'
+                        id='sortArtistsPlaysBtn'
+                        onClick={handleCLick}>
+                            Sort by Most Plays
+                    </button>
                     <button
-                        id='sortArtistsPopularity'
-                        onClick={props.sortByPopularity}>Sort by Popularity</button>
+                        className='artistsSortBtn'
+                        id='sortArtistsPopularityBtn'
+                        onClick={handleCLick}>
+                            Sort by Popularity
+                    </button>
                 </div>
                 <div className='artistsRanks'>
                 {

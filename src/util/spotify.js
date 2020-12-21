@@ -63,7 +63,7 @@ const Spotify = {
                 } }).then(response => {
                     return response.json();
                 }).then(jsonResponse => {
-                    // console.log(jsonResponse);
+                    console.log(jsonResponse);
                     if(jsonResponse.items <= 0){
                         return;
                     }
@@ -98,7 +98,8 @@ const Spotify = {
                             uri: track.uri,
                             trackURL: track.external_urls.spotify,
                             albumURL: track.album.external_urls.spotify,
-                            previewURL: track.preview_url
+                            previewURL: track.preview_url,
+                            artistURL: track.artists[0].external_urls.spotify
                     })))
                     };
             });

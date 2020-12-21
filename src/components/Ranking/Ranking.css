@@ -2,8 +2,47 @@
     width: 100%;
     display: flex;
     justify-content: space-around;
+    text-align: center;
+    float: inherit;
 }
 
-.sortButtons {
-   text-align: center;
+.lengthBtnContainer {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+}
+
+.lengthBtnContainer button {
+    width: 10em;
+    white-space: nowrap;
+}
+
+hr {
+    max-width: 75%;
+}
+
+@media only screen and (max-width: 1300px){
+    .rankings{ 
+    display: block;
+    }
+    /* .lengthBtnContainer {
+        width: 100%;
+    } */
+
+    hr {
+        max-width: 85%;
+    }
+}
+
+@media only screen and (max-width: 1300px){
+    .lengthBtnContainer {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 640px){
+    .lengthBtnContainer button {
+        white-space: pre-wrap
+    }
 }

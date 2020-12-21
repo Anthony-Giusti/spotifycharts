@@ -1,0 +1,25 @@
+.btnContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 25em;
+    flex-shrink: 1;
+    margin: 0 auto;
+}
+
+h4 {
+    text-align: center;
+}
+.btnContainer button {
+
+}
+
+.timeRangeBtnContainer{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.timeRangeBtn :hover{
+color:#000000;
+background-color:#FFFFFF;
+}

@@ -24,7 +24,12 @@ const Track = props => {
                                 target='_blank'>{props.track.name}
                             </a>
                         </h3>
-                        <h4>{props.track.artists[0].name}</h4>
+                        <h4><a
+                            href={props.track.artistURL}
+                            target='_blank'>
+                                {props.track.artists[0].name}
+                            </a>
+                        </h4>
                     </div>
                     <div>
                         <p>Album: <a 

@@ -11,6 +11,10 @@ const TimeRange = props => {
         document.getElementById(e.target.id).classList.add('btnSelected');
     }
 
+    const darkModeToggle = () =>{
+        document.body.classList.toggle("dark");
+    }
+
 
     return(
         <section className='btnContainer'>
@@ -41,7 +45,7 @@ const TimeRange = props => {
                     One Month
                 </button>
             </div> 
-            <div>
+            <div class='info'>
                 <p>This app will use the Spotify data display information about your listening habits.
                     This will only account for your top 50 most played artists and tracks in each given
                     time range. This app will be more effective with using a frequently used acccount.
@@ -59,9 +63,11 @@ const TimeRange = props => {
                     id=''>
                     GitHub
             </button>
-            <button>
-                    Dark Mode Toggle
-            </button>
+            <div class="switch">
+                <input id="theme-toggle" type="checkbox" />
+                <label for="theme-toggle" onClick={darkModeToggle}></label>
+                &nbsp; Toggle Theme
+            </div>
         </section>
     )
 }

@@ -4,10 +4,12 @@
     display: flex;
     margin: auto;
     text-align: center;
-    background-color: rgba(152, 160, 181, 0.05);
+    background-color: rgba(152, 160, 181, 0.151);
     margin: 0.7em auto;
-    border: 0.2em solid black;
+    border-radius: 2em;
 }
+
+
 
 .trackPhotoContainer {
     max-width: 12em;
@@ -15,10 +17,10 @@
 }
 
 .trackPhoto {
+    border-radius: 2em;
     object-fit: cover;
     width: 100%;
     height: 100%;
-    border-right: 0.2em solid black;
 }
 
 .trackInfo {
@@ -36,6 +38,14 @@
     margin: 0.3em 0;
 }
 
+.track:hover {
+        transition-duration: 250ms;
+        background-image: -webkit-linear-gradient(left, var(--accent),rgba(152, 160, 181, 0.151), transparent 30%, transparent 100%);
+        box-shadow: 0 0 0 1.25pt var(--accent);
+        -webkit-transform: scale(1.035);
+        padding-left: 0.9em;
+}
+
 
 @media only screen and (max-width: 750px){
     .track{
@@ -48,4 +58,3 @@
         max-height: 17em; 
     }
 }
-

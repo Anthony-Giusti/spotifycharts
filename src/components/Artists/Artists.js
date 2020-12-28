@@ -23,7 +23,7 @@ const Artists = props => {
     } else {
         return (
             <section className="artists">
-                <div className='artistHeader'>
+                <div className='artistsHeader'>
                     <h2>Artists</h2>
                 </div>
                 <div className='artistButtons sortButtons'>

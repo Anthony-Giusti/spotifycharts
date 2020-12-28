@@ -4,9 +4,9 @@
     display: flex;
     margin: auto;
     text-align: center;
-    background-color: rgba(152, 160, 181, 0.05);
+    background-color: rgba(152, 160, 181, 0.151);
     margin: 0.7em auto;
-    border: 0.2em solid black;
+    border-radius: 2em;
 }
 
 .artistPhotoContainer {
@@ -14,11 +14,20 @@
     max-height: 100%; 
 }
 
+.artist:hover{
+    transition-duration: 250ms;
+    background-image: -webkit-linear-gradient(left, var(--accent),rgba(152, 160, 181, 0.151), transparent 30%, transparent 100%);
+    /* border: 0.1em solid var(--accent);  */
+    box-shadow: 0 0 0 1.25pt var(--accent);
+    -webkit-transform: scale(1.035);
+    padding-left: 0.9em;
+}
+
 .artistPhoto {
+    border-radius: 2em;
     object-fit: cover;
     width: 100%;
     height: 100%;
-    border-right: 0.2em solid rgba(0, 0, 0, 1);
 }
 
 .artistInfo {
@@ -35,10 +44,18 @@
 
 .artist p {
     margin: 0.2em 0;
+    padding: 0 0.2em;
 }
 
 .artistGenres{
-    
+    /* color: var(--accent); */
+}
+
+@font-face {
+    font-family: 'Dot';
+    src: local('Source Sans Pro');
+    color: var(--accent);
+    unicode-range: U+2022;
 }
 
 
@@ -50,7 +67,7 @@
     }
 
     .artistPhotoContainer {
-        max-width: 17em;
+        max-width: 11em;
         max-height: 17em; 
     }
 }

@@ -1,3 +1,29 @@
-.tracks {
+.tracks{
    flex: 1;
+   background-color: var(--background-alt);
+   margin:  1em 0.5em 1em 0;
+   border-radius: 2em;
+   padding: 1em
 }
+
+.trackButtons {
+   display: flex;
+   margin: 0 auto;
+   width: 70%;
+}
+
+.tracksHeader {
+   background-color: var(--foreground);
+   border-radius: 3em;
+   margin: 0 auto;
+   padding: 0 4em;
+   width: fit-content;
+}
+
+.tracksHeader h2 {
+   margin-top: 0em;
+   margin-bottom: 0.45em;
+}
+
+
+/*  */

@@ -1,5 +1,5 @@
 /* *{
-      outline: solid white 2px;
+      outline: solid var(--clr-dark) 2px;
   } */
 
 :root {
@@ -13,7 +13,6 @@
     --clr-dark: #303030;
     --btn-hover-light: rgba(0, 0, 35, 0.10);
     --btn-hover-dark: rgba(98, 98, 128, 0.15);
-    /* --clr-accent: #16e0bd; */
 
     --fs-h1: 3rem;
     --fs-h2: 2.25rem;
@@ -24,14 +23,35 @@
          0.125em 0.125em 0.25em rgba(0,0,0,.15);
 }
 
+.light {
+    --background: #f1faee;
+    --background-alt: #00f7ff;
+    --foreground: #1d3557;
+    --accent: #8ce6ffa0;
+    --font-color:  #303030;
+    --visited: #551A8B;
+    --link: #0000EE;
+}
+
+.dark {
+    --background: #2b364b;
+    --background-alt: #000000ab;
+    --foreground: rgba(152, 160, 181, 0.151);
+    --accent: #8ce6ffa0;
+    /* --accent: #8ce6ff2e; */
+    --font-color:  #fff;
+    --visited: rgb(211, 138, 138);
+    --link: #8db2e5;
+}
+
 
 html {
     scroll-behavior: smooth;
 }
 
 body {
-    background-color: var(--clr-light);
-    color: var(--clr-dark);
+    background-color: var(--background);
+    color: var(--font-color);
     margin: 0;
     font-family: var(--ff-primary);
     font-size: var(--fs-body);
@@ -49,15 +69,33 @@ button {
     /* color: black; */
     text-align:center;
     transition: all 0.15s;
+    border-radius: 2em;
 }
 
 button:hover {
-background-color: var(--btn-hover-light);
--webkit-transform: scale(1.04);
+/* background-color: var(--btn-hover-light); */
+-webkit-transform: scale(1.06);
 }
 
 .btnSelected {
-    border: 2px solid black;
+    /* border: 0.2em solid var(--accent); */
+    transition-property: all;
+    flex-grow: 1;
+    transition-duration: 400ms;
+    background-color: var(--accent);
+    /* -webkit-transform: scale(1.04); */
+    color: #fff;
+    /* background-image: -webkit-linear-gradient(left, var(--accent),
+        rgba(152, 160, 181, 0.151),
+     transparent 30%, transparent 100%); */
+}
+
+a {
+    color: var(--link);
+}
+
+a:visited {
+    color: var(--visited);
 }
 
 

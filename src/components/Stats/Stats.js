@@ -17,6 +17,7 @@ const Stats = props =>{
             <GenreChart 
                 sortedGenres={props.sortedGenres}
                 timeRange={props.timeRange}
+                animate={props.animate}
             />
             <PopularityStats 
                 averageArtistPopularity={props.averageArtistPopularity}

@@ -8,6 +8,7 @@ let gerneChart;
 let genreNames = null;
 let genreAmounts = null;
 let genreAmountsTotal;
+let duration = 1000;
 
 Chart.defaults.global.defaultFontFamily = "'PT Sans', sans-serif"
 Chart.defaults.global.legend.display = false;
@@ -24,6 +25,11 @@ class GenreChart extends Component{
     }
 
     buildChart = () => {
+        if (this.props.animate){
+            duration = 1000;
+        } else {
+            duration = 0;
+        }
         const genreData = this.props.sortedGenres[this.props.timeRange];
         if (typeof genreData === "undefined") return;
         const myChartRef = this.chartRef.current.getContext("2d");
@@ -78,10 +84,12 @@ class GenreChart extends Component{
                 }
             }
             
+        },
+        animation: {
+            duration: duration
         }
-    }
-});
-
+        }
+        });
     }
 
     render() {
@@ -89,7 +97,7 @@ class GenreChart extends Component{
         let chartHeader;
         if (this.props.sortedGenres.length === 0) {
             chartHeader = 'No data loaded yet...'
-        } else if (this.props.sortedGenres.length[0] < 10) {
+        } else if (this.props.sortedGenres.length[this.props.timeRange] < 15) {
             chartHeader = 'No enough data available for chart'
         } else {
             chartHeader = 'Genre Chart'

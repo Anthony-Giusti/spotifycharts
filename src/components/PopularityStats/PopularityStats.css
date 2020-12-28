@@ -2,11 +2,22 @@
     flex-grow: 1;
     text-align: center;
     min-width: 15em;
+    padding: 1em 0;
+    background-color: var(--background-alt);
+}
+
+.popularityStatsContainerFlex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .popularityStatsContainer h3{
     font-size: 1.3em;
     margin: .2em auto;
+    background-color: var(--foreground);
+    border-radius: 2em;
+    width: 90%;
 }
 
 .popularityStatsContainer p{
@@ -19,6 +30,15 @@
     align-items: flex-start;
 }
 
+.genreRanking li {
+    font-size: 1.13em;
+    padding: 0.1em 0.1em 0.1em 0.7em;
+}
+
 .popularityStatsContainer hr {
     max-width: 11em;
+}
+
+.genres {
+    flex: 1;
 }

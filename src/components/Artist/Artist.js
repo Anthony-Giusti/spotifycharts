@@ -4,6 +4,7 @@ import './Artist.css';
 
 const Artist = props => {
         return (
+            // <a href={props.artist.artistURL} target='_blank'>
             <div className='artist'>
                     <div className='artistPhotoContainer'>
                     <a href={props.artist.artistURL} target='_blank'>
@@ -17,10 +18,8 @@ const Artist = props => {
                         <p>Spotify Followers: {props.artist.followers}</p>
                         <p>Spotify Popularity Rating: {props.artist.popularity}</p>
                     </div>
-                   
-                
-
             </div>
+            // </a>
         )
     }
 

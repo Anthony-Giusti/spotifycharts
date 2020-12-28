@@ -16,8 +16,10 @@ const [timeRange, setTimeRange] = useState(0);
 const [maxLength, setMaxLength] = useState(5);
 const [averageArtistPopularity, setAverageArtistPopularity] = useState();
 const [averageTrackPopularity, setAverageTrackPopularity] = useState();
+const [animate, setAnimate] = useState(true);
 
     const changeTimeRange = e => {
+        setAnimate(true);
         switch (e.target.id){
             case 'farTimeRange' :
                 setTimeRange(0);
@@ -34,6 +36,7 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState();
     }
 
     const changeMaxLength = e => {
+        setAnimate(false);
         switch (e.target.id){
             case 'maxLength5' :
                 setMaxLength(5);
@@ -53,6 +56,7 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState();
     }
 
     const sortByPopularity = e => {
+        setAnimate(false);
         let sortTarget;
         let sort = [];
         if (e.target.id === 'sortArtistsPopularityBtn') {
@@ -71,6 +75,7 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState();
     }
 
     const sortByPlays = e => {
+        setAnimate(false);
         let sortTarget;
         let sort = [];
         if (e.target.id === 'sortArtistsPlaysBtn'){
@@ -89,7 +94,6 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState();
     }
 
     const getFavoirteGenres = () => {
-        console.log(sortedArtists);
         let returnedGenres = [];
         let favGenres = [];
         let artistsPopularity = [];
@@ -135,6 +139,7 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState();
     }
 
     const getSpotifyData = () => {
+        setAnimate(true);
         Spotify.getTopTracks().then(spotifyResponse => {
             for (let a = 0; a < spotifyResponse.length; a++){
                 for (let b = 0; b < spotifyResponse[a].length; b++){
@@ -148,6 +153,7 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState();
     }
 
     const getExampleData = () => {
+        setAnimate(true);
         setSortedArtists(exampleSortedArtists);
         setSortedTracks(exampleSortedTracks);
     }
@@ -168,6 +174,7 @@ const [averageTrackPopularity, setAverageTrackPopularity] = useState();
                 getSpotifyData={getSpotifyData}
                 timeRange={timeRange}
                 getExampleData={getExampleData}
+                animate={animate}
                 />
             <Ranking
                 sortedGenres={sortedGenres}

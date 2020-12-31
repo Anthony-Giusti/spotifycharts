@@ -1,26 +1,41 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Artist from '../Artist/Artist'
 import './Artists.css';
-import '../Ranking/Ranking.css'
+
+let orderBtn = 'arrow arrow-down';
+let artistMap = <p>No data available...</p>;
 
 const Artists = props => {
-    const handleCLick = e => {
-        let buttons = document.getElementsByClassName('artistsSortBtn');
-        console.log(e.target.id);
-        if(e.target.id === 'sortArtistsPlaysBtn') {
-            props.sortByPlays(e);
-        } else if (e.target.id === 'sortArtistsPopularityBtn') {
-            props.sortByPopularity(e);
+
+    if (typeof props.sortedArtists[props.timeRange] !== 'undefined') {
+        if (props.ArtistItemMode === 'plays'){
+            document.getElementById('sortArtistsPlaysBtn').classList.add('btnSelected');
+            document.getElementById('sortArtistsPopularityBtn').classList.remove('btnSelected');
+        } else if (props.ArtistItemMode === 'popularity'){
+            document.getElementById('sortArtistsPopularityBtn').classList.add('btnSelected');
+            document.getElementById('sortArtistsPlaysBtn').classList.remove('btnSelected');
         }
 
-        Array.from(buttons).forEach(btn => btn.classList.remove('btnSelected'));
-        document.getElementById(e.target.id).classList.add('btnSelected');
+        artistMap = props.sortedArtists[props.timeRange].map(artists => {
+            return <Artist artist={artists}></Artist>
+            }).splice(0, props.maxLength);
+        
     }
 
+    const handleCLick = e => {
+        if(e.target.id === 'sortArtistsPlaysBtn') {
+            props.rankingSort(e);
+        } else if (e.target.id === 'sortArtistsPopularityBtn') {
+            props.rankingSort(e);
+        } else if (e.target.classList.contains('artistsSortBtn')) {
+            props.sortOrder(e);
+        }
+    }
 
-    if (props.sortedArtists.length === 0) {
-        return <p>No data loaded yet...</p>
-    } else {
+        props.ArtistItemOrder === 'descending' 
+                ? orderBtn = 'arrow arrow-down' 
+                : orderBtn = 'arrow arrow-up';
+
         return (
             <section className="artists">
                 <div className='artistsHeader'>
@@ -28,28 +43,34 @@ const Artists = props => {
                 </div>
                 <div className='artistButtons sortButtons'>
                     <button 
-                        className='artistsSortBtn btnSelected'
+                        className='artistsSortBtn sortPlaysBtn btnSelected'
                         id='sortArtistsPlaysBtn'
                         onClick={handleCLick}>
                             Sort by Most Plays
                     </button>
                     <button
-                        className='artistsSortBtn'
+                        className='artistsSortBtn sortPopularityBtn'
                         id='sortArtistsPopularityBtn'
                         onClick={handleCLick}>
                             Sort by Popularity
                     </button>
+                    <button 
+                        className='artistsSortBtn sortOrderBtn'
+                        id='sortArtistsOrderBtn'
+                        onClick={handleCLick}>
+                            <span className={orderBtn}></span>
+                        </button>
                 </div>
                 <div className='artistsRanks'>
-                {
+                    {artistMap}
+                {/* {
                     props.sortedArtists[props.timeRange].map(artists => {
                         return <Artist artist={artists}></Artist>
                     }).splice(0, props.maxLength)
-                }
+                } */}
                 </div>
             </section>
         )
     } 
-}
 
 export default Artists;

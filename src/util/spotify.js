@@ -70,7 +70,7 @@ const Spotify = {
                     if (jsonResponse.items[0].type === 'artist'){
                         artistData.push(jsonResponse.items.map( artist => ({
                             name: artist.name,
-                            rank: null,
+                            playsRank: null,
                             href: artist.href,
                             genres: artist.genres.slice(0, 4)
                                 .map(genre => genre[0].toUpperCase() + genre.substr(1))
@@ -89,7 +89,7 @@ const Spotify = {
                             artists: track.artists,
                             albumName: track.album.name,
                             releaseYear: track.album.release_date.slice(0, 4),
-                            rank: null,
+                            playsRank: null,
                             id: track.id,
                             href: track.href,
                             popularity: track.popularity,
@@ -105,6 +105,7 @@ const Spotify = {
             });
         }
     }
+        console.log(artistData);
         return artistData;
     }
 }

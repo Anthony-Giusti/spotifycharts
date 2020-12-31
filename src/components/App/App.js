@@ -14,9 +14,14 @@ const [sortedTracks, setSortedTracks] = useState([]);
 const [sortedGenres, setSortedGenres] = useState([]);
 const [timeRange, setTimeRange] = useState(0);
 const [maxLength, setMaxLength] = useState(5);
+const [ArtistItemOrder, setArtistItemOrder] = useState('descending');
+const [TrackItemOrder, setTrackItemOrder] = useState('descending');
+const [ArtistItemMode, setArtistItemMode] = useState('playsRank');
+const [TrackItemMode, setTrackItemMode] = useState('popularity');
 const [averageArtistPopularity, setAverageArtistPopularity] = useState();
 const [averageTrackPopularity, setAverageTrackPopularity] = useState();
 const [animate, setAnimate] = useState(true);
+const [dataMessage, setDataMessage] = useState('No data loaded...')
 
     const changeTimeRange = e => {
         setAnimate(true);
@@ -55,42 +60,63 @@ const [animate, setAnimate] = useState(true);
         }
     }
 
-    const sortByPopularity = e => {
+    const rankingSort = e => {
         setAnimate(false);
         let sortTarget;
-        let sort = [];
-        if (e.target.id === 'sortArtistsPopularityBtn') {
+        let itemOrderSort = false;
+        let sort;
+
+        if (e.target.classList.contains('artistsSortBtn')){
             sort = [...sortedArtists];
             sortTarget = setSortedArtists;
-        } else if (e.target.id === 'sortTracksPopularityBtn'){
+            itemOrderSort = ArtistItemOrder === 'ascending' ? true : false; 
+        } else if (e.target.classList.contains('tracksSortBtn')){
             sort = [...sortedTracks];
             sortTarget = setSortedTracks;
-        } else {
-            return;
+            itemOrderSort = TrackItemOrder === 'ascending' ? true : false; 
         }
-        for (let i = 0; i < sort.length; i++){
-            sort[i].sort((a, b) => b.popularity - a.popularity);
-            }
+
+        if (e.target.classList.contains('sortPlaysBtn')){
+            sort.forEach(arr => arr.sort((a, b) => a.playsRank - b.playsRank));
+        } else if (e.target.classList.contains('sortPopularityBtn')){
+            sort.forEach(arr => arr.sort((a, b) => b.popularity - a.popularity));
+        }
+
+        if (itemOrderSort) { sort.forEach(arr => arr.reverse()) }
+
         sortTarget(sort);
     }
 
-    const sortByPlays = e => {
+    const sortOrder = e => {
         setAnimate(false);
-        let sortTarget;
         let sort = [];
-        if (e.target.id === 'sortArtistsPlaysBtn'){
-            sort = [...sortedArtists];
-            sortTarget = setSortedArtists;
-        } else if (e.target.id === 'sortTracksPlaysBtn'){
-            sort = [...sortedTracks];
-            sortTarget = setSortedTracks;
-        } else {
-            return;
+
+        if ((e.target.classList.contains('artistsSortBtn'))) {
+            sort.push([...sortedArtists]);
+
+            ArtistItemOrder === 'descending' 
+            ? setArtistItemOrder('ascending') 
+            : setArtistItemOrder('descending');
+
+        } else if (e.target.id === 'sortTracksOrderBtn') {
+            sort.push([...sortedTracks]);
+
+            TrackItemOrder === 'descending'
+            ? setTrackItemOrder('ascending') 
+            : setTrackItemOrder('descending');
+
+        } else if (e.target.id === 'loadExampleDataBtn' || 'loadSpotifyDataBtn'){
+            if (ArtistItemOrder === 'ascending') {
+                sort.push([...sortedArtists]);
+                setArtistItemOrder('descending')
+            }
+            if (TrackItemOrder === 'ascending') {
+                sort.push([...sortedTracks]);
+                setTrackItemOrder('descending')
+            }
         }
-        for (let i = 0; i < sort.length; i++){
-            sort[i].sort((a, b) => a.rank - b.rank);
-            }  
-        sortTarget(sort);
+
+        sort.forEach(itemList => itemList.forEach(arr => arr.reverse()));
     }
 
     const getFavoirteGenres = () => {
@@ -98,6 +124,10 @@ const [animate, setAnimate] = useState(true);
         let favGenres = [];
         let artistsPopularity = [];
         let tracksPopularity = [];
+
+        if (sortedTracks.length === 0) {
+            return;
+        }
         
         const reducer = (acc, cur) => acc + cur;
 
@@ -133,31 +163,49 @@ const [animate, setAnimate] = useState(true);
             tracksPopularity[i] = Math.round(tracksPopularity[i].reduce(reducer) / tracksPopularity[i].length);
             setAverageTrackPopularity(tracksPopularity);
             setAverageArtistPopularity(artistsPopularity);
-            
         }
         setSortedGenres(returnedGenres);
     }
 
-    const getSpotifyData = () => {
+    const getSpotifyData = (e) => {
+        let artistData = [];
+        let trackData = [];
         setAnimate(true);
         Spotify.getTopTracks().then(spotifyResponse => {
             for (let a = 0; a < spotifyResponse.length; a++){
                 for (let b = 0; b < spotifyResponse[a].length; b++){
-                    spotifyResponse[a][b].rank = b + 1;
+                    // spotifyResponse[a][b].rank = b + 1;
+                    spotifyResponse[a][b].playsRank = b + 1;
                 }
             }
-            setSortedArtists(spotifyResponse.splice(0, 3));
-            setSortedTracks(spotifyResponse);
-            console.log(sortedArtists);
+
+            for (let i = 0; i < spotifyResponse.length; i++) {
+                if(spotifyResponse[i][0].type === 'artist') {
+                    artistData.push(spotifyResponse[i]);
+                } else if (spotifyResponse[i][0].type === 'track') {
+                    trackData.push(spotifyResponse[i]);
+                }
+            }
+            sortOrder(e);
+            setArtistItemOrder('descending');
+            setSortedArtists(artistData);
+            setSortedTracks(trackData);
             });
+            if (sortedArtists.length === 0 || sortedTracks.length === 0) {
+                setDataMessage('Insufficient Spotify Data!')
+            }
     }
 
-    const getExampleData = () => {
+    const getExampleData = (e) => {
         setAnimate(true);
         setSortedArtists(exampleSortedArtists);
         setSortedTracks(exampleSortedTracks);
+        setArtistItemOrder('descending');
+        setTrackItemOrder('descending');
+        sortOrder(e);
     }
 
+    // optimize this!
     useEffect(() => {
            getFavoirteGenres();
         }, [sortedTracks]);
@@ -175,16 +223,22 @@ const [animate, setAnimate] = useState(true);
                 timeRange={timeRange}
                 getExampleData={getExampleData}
                 animate={animate}
+                dataMessage={dataMessage}
                 />
             <Ranking
                 sortedGenres={sortedGenres}
-                sortByPlays={sortByPlays}
-                sortByPopularity={sortByPopularity}
                 sortedArtists={sortedArtists}
                 timeRange={timeRange}
                 sortedTracks={sortedTracks}
                 maxLength={maxLength}
-                changeMaxLength={changeMaxLength}/>
+                changeMaxLength={changeMaxLength}
+                ArtistItemOrder={ArtistItemOrder}
+                TrackItemOrder={TrackItemOrder}
+                sortOrder={sortOrder}
+                rankingSort={rankingSort}
+                ArtistItemMode={ArtistItemMode}
+                setArtistItemMode={setArtistItemMode}
+                TrackItemMode={TrackItemMode}/>
         </div>
     )
 }

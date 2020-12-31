@@ -16,6 +16,7 @@ const Ranking = props => {
     return (
         <div className='rankingsContainer'>
         <hr></hr>
+        <div className='rankingsHeader'><h2>Rankings</h2></div>
         <div className='lengthBtnContainer'> 
                 <button
                     className='lengthBtn btnSelected'
@@ -38,21 +39,26 @@ const Ranking = props => {
                     onClick={handleCLick}>
                     Show 50 Items </button>
         </div>
-        <div className='rankings'>
+        <section className='rankings'>
             <Artists
-                sortByPlays={props.sortByPlays}
-                sortByPopularity={props.sortByPopularity}
                 sortedArtists={props.sortedArtists}
                 timeRange={props.timeRange}
                 maxLength={props.maxLength}
+                ArtistItemOrder={props.ArtistItemOrder}
+                sortOrder={props.sortOrder}
+                rankingSort={props.rankingSort}
+                ArtistItemMode={props.ArtistItemMode}
+                setArtistItemMode={props.setArtistItemMode}
                 />
             <Tracks 
-                sortByPlays={props.sortByPlays}
-                sortByPopularity={props.sortByPopularity}
                 sortedTracks={props.sortedTracks}
                 timeRange={props.timeRange}
-                maxLength={props.maxLength}/>
-        </div>
+                maxLength={props.maxLength}
+                TrackItemOrder={props.TrackItemOrder}
+                sortOrder={props.sortOrder}
+                rankingSort={props.rankingSort}
+                TrackItemMode={props.TrackItemMode}/>
+        </section>
         </div>
     )
 }

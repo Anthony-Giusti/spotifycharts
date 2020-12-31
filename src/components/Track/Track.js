@@ -37,7 +37,8 @@ const Track = props => {
                             target='_blank'>{props.track.albumName}
                             </a>
                         </p>
-                        <p>Release: {props.track.releaseYear}</p>
+                        {/* <p>Release: {props.track.releaseYear}</p> */}
+                        <p>Your Play Rank : {props.track.playsRank}</p>
                         <p>Spotify Popularity Rating: {props.track.popularity}</p>
                     </div> 
                 </div>

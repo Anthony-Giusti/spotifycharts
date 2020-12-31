@@ -13,6 +13,7 @@ const TimeRange = props => {
 
     const darkModeToggle = () =>{
         document.body.classList.toggle("dark");
+        document.body.classList.toggle("light");
     }
 
 
@@ -20,7 +21,7 @@ const TimeRange = props => {
         <section className='btnContainer'>
             <button 
                 className='dataBtn'
-                id='spotifyDataBtn'
+                id='loadSpotifyDataBtn'
                 onClick={props.getSpotifyData}>
                     Fetch Spotfiy Data
             </button>
@@ -53,8 +54,8 @@ const TimeRange = props => {
                     example button or look at the readme at the GitHub for more information</p>
             </div> 
             <button
-                    className=''
-                    id=''
+                    className='dataBtn'
+                    id='loadExampleDataBtn'
                     onClick={props.getExampleData}>
                     Load Example Data
             </button>

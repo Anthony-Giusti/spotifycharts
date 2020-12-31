@@ -9,12 +9,10 @@ const PopularityStats = props => {
                     <h3>Average Artists Populairty:</h3>
                     <p>No data loaded yet...</p>
                 </div>
-                <hr></hr>
                 <div className='artistsPopularity'>
                     <h3>Average Track Popularity:</h3>
                     <p>No data loaded yet...</p>
                 </div>
-                <hr></hr>
                 <h3>Top Genres</h3>
             </div>
         )
@@ -47,8 +45,6 @@ const PopularityStats = props => {
             </section>
         )
     }
-
-    
 }
 
 export default PopularityStats;

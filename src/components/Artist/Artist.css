@@ -17,7 +17,6 @@
 .artist:hover{
     transition-duration: 250ms;
     background-image: -webkit-linear-gradient(left, var(--accent),rgba(152, 160, 181, 0.151), transparent 30%, transparent 100%);
-    /* border: 0.1em solid var(--accent);  */
     box-shadow: 0 0 0 1.25pt var(--accent);
     -webkit-transform: scale(1.035);
     padding-left: 0.9em;
@@ -47,18 +46,12 @@
     padding: 0 0.2em;
 }
 
-.artistGenres{
-    /* color: var(--accent); */
-}
-
 @font-face {
     font-family: 'Dot';
     src: local('Source Sans Pro');
     color: var(--accent);
     unicode-range: U+2022;
 }
-
-
 
 @media only screen and (max-width: 750px){
     .artist{

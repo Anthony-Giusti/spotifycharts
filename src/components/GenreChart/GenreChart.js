@@ -26,7 +26,7 @@ class GenreChart extends Component{
 
     buildChart = () => {
         if (this.props.animate){
-            duration = 1000;
+            duration = 800;
         } else {
             duration = 0;
         }
@@ -53,29 +53,33 @@ class GenreChart extends Component{
             label: '',
             data: genreAmounts,
             backgroundColor: [
-                'rgba(255, 99, 132, 0.7)',
-                'rgba(54, 162, 235, 0.7)',
-                'rgba(255, 206, 86, 0.7)',
-                'rgba(75, 192, 192, 0.7)',
-                'rgba(153, 102, 255, 0.7)',
-                'rgba(255, 159, 64, 0.7)',
-                'rgba(255, 99, 132, 0.7)',
-                'rgba(54, 162, 235, 0.7)',
-                'rgba(255, 206, 86, 0.7)',
-                'rgba(75, 192, 192, 0.7)',
-                'rgba(153, 102, 255, 0.7)',
-                'rgba(255, 159, 64, 0.7)',
-                'rgba(255, 99, 132, 0.7)',
-                'rgba(54, 162, 235, 0.7)',
-                'rgba(255, 206, 86, 0.7)'
+                'rgba(140, 230, 255, 0.9)',
+                'rgba(133, 232, 118, 0.91)',
+                'rgba(255, 255, 120, 1)',
+                'rgba(255, 142, 128, 1)',
+                'rgba(171, 116, 232, 0.91)',
+                'rgba(100, 172, 232, 0.91)',
+                'rgba(122, 252, 142, 1)',
+                'rgba(232, 215, 102, 0.91)',
+                'rgba(255, 149, 102, 1)',
+                'rgba(214, 110, 255, 1)',
+                'rgba(72, 237, 255, 1)',
+                'rgba(105, 232, 56, 0.9)',
+                'rgba(255, 200, 51, 0.9)',
+                'rgba(255, 69, 59, 0.9)',
+                'rgba(117, 53, 232, 0.6)'
             ],
-            borderColor: [],
-            borderWidth: 1
+            borderColor: ['rgba(255,255,255,1)'],
+            borderWidth: 0.5,
+            hoverBorderWidth: 6
         }]
     },
     options: {
         tooltips: {
             mode: 'index',
+            cornerRadius: 6,
+            bodyFontSize: 16,
+            caretSize: 10,
             callbacks: {
                 label: function(tooltipItems, data) {
                     return data.labels[tooltipItems.index] + ' ' + 
@@ -83,7 +87,6 @@ class GenreChart extends Component{
                         / genreAmountsTotal * 100) + Number.EPSILON ) * 100) / 100 + '%';
                 }
             }
-            
         },
         animation: {
             duration: duration
@@ -93,10 +96,9 @@ class GenreChart extends Component{
     }
 
     render() {
-        console.log(this.props.sortedGenres);
         let chartHeader;
         if (this.props.sortedGenres.length === 0) {
-            chartHeader = 'No data loaded yet...'
+            chartHeader = this.props.dataMessage;
         } else if (this.props.sortedGenres.length[this.props.timeRange] < 15) {
             chartHeader = 'No enough data available for chart'
         } else {

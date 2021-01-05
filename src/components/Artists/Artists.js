@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Artist from '../Artist/Artist'
 import './Artists.css';
 
@@ -6,6 +6,15 @@ let orderBtn = 'arrow arrow-down';
 let artistMap = <p>No data available...</p>;
 
 const Artists = props => {
+    const handleCLick = e => {
+        if(e.target.id === 'sortArtistsPlaysBtn') {
+            props.rankingSort(e);
+        } else if (e.target.id === 'sortArtistsPopularityBtn') {
+            props.rankingSort(e);
+        } else if (e.target.classList.contains('artistsSortBtn')) {
+            props.sortOrder(e);
+        }
+    }
 
     if (typeof props.sortedArtists[props.timeRange] !== 'undefined') {
         if (props.ArtistItemMode === 'plays'){
@@ -16,20 +25,11 @@ const Artists = props => {
             document.getElementById('sortArtistsPlaysBtn').classList.remove('btnSelected');
         }
 
-        artistMap = props.sortedArtists[props.timeRange].map(artists => {
-            return <Artist artist={artists}></Artist>
+        artistMap = props.sortedArtists[props.timeRange].map(artist => {
+            return <Artist artist={artist} key={artist.playsRank}></Artist>
             }).splice(0, props.maxLength);
-        
-    }
-
-    const handleCLick = e => {
-        if(e.target.id === 'sortArtistsPlaysBtn') {
-            props.rankingSort(e);
-        } else if (e.target.id === 'sortArtistsPopularityBtn') {
-            props.rankingSort(e);
-        } else if (e.target.classList.contains('artistsSortBtn')) {
-            props.sortOrder(e);
-        }
+    } else {
+        artistMap = <p>{props.dataMessage}</p>
     }
 
         props.ArtistItemOrder === 'descending' 
@@ -63,11 +63,6 @@ const Artists = props => {
                 </div>
                 <div className='artistsRanks'>
                     {artistMap}
-                {/* {
-                    props.sortedArtists[props.timeRange].map(artists => {
-                        return <Artist artist={artists}></Artist>
-                    }).splice(0, props.maxLength)
-                } */}
                 </div>
             </section>
         )

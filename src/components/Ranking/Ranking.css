@@ -55,4 +55,22 @@ hr {
     .lengthBtnContainer button {
         white-space: pre-wrap
     }
+
+    .rankingsHeader{
+        width: 60%;
+    }
+}
+@media only screen and (max-width: 500px){
+    .lengthBtnContainer{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .lengthBtnContainer button {
+        max-width: 70%;
+    }
+
+    .rankingsHeader{
+        width: auto;
+    }
 }

@@ -41,7 +41,6 @@ class GenreChart extends Component{
         }
         genreNames = genreData[0].slice(0, genreAmounts.length);
         genreAmountsTotal = genreAmounts.reduce(reducer);
-        console.log(genreAmountsTotal);
         
         if (typeof gerneChart !== "undefined") gerneChart.destroy();
 
@@ -96,28 +95,27 @@ class GenreChart extends Component{
     }
 
     render() {
-        let chartHeader;
-        if (this.props.sortedGenres.length === 0) {
-            chartHeader = this.props.dataMessage;
-        } else if (this.props.sortedGenres.length[this.props.timeRange] < 15) {
-            chartHeader = 'No enough data available for chart'
+        let chartHeader = 'Genre Chart';
+        let chart;
+
+        if (typeof this.props.sortedGenres[this.props.timeRange] !== 'undefined'){
+            chart = <canvas
+            width="100%" 
+            height="100%"
+            id="genreChart"
+            ref={this.chartRef}
+            />
         } else {
-            chartHeader = 'Genre Chart'
+            chart = this.props.dataMessage;
         }
+
             return (
                 <div className='chartContainer'>
                     <h2>{chartHeader}</h2>
-                    <canvas
-                        width="100%" 
-                        height="100%"
-                        id="genreChart"
-                        ref={this.chartRef}
-                        />
+                    {chart}
                 </div>
             )
         }
     }
-
-
 
 export default GenreChart; 

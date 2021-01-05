@@ -64,3 +64,9 @@
         max-height: 17em; 
     }
 }
+
+@media only screen and (max-width: 400px){
+    .artistPhotoContainer {
+        max-width: 25%;
+    }
+}

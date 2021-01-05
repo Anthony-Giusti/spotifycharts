@@ -3,25 +3,35 @@ import Track from '../Track/Track';
 import './Tracks.css';
 
 let orderBtn = 'arrow arrow-down';
+let tracksMap = <p>No data available...</p>
 
 const Tracks = props => {
     const handleCLick = e => {
         if(e.target.id === 'sortTracksPlaysBtn') {
             props.rankingSort(e);
-            document.getElementById(e.target.id).classList.add('btnSelected');
-            document.getElementById('sortTracksPopularityBtn').classList.remove('btnSelected');
         } else if (e.target.id === 'sortTracksPopularityBtn') {
             props.rankingSort(e);
-            document.getElementById(e.target.id).classList.add('btnSelected');
-            document.getElementById('sortTracksPlaysBtn').classList.remove('btnSelected');
         } else if (e.target.classList.contains('tracksSortBtn')) {
             props.sortOrder(e);
         }
     }
-    
-    if (props.sortedTracks.length === 0) {
-        return <p>No data loaded yet...</p>
-    } else {
+
+    if (typeof props.sortedTracks[props.timeRange] !== 'undefined') {
+        if (props.TrackItemMode === 'plays'){
+            document.getElementById('sortTracksPlaysBtn').classList.add('btnSelected');
+            document.getElementById('sortTracksPopularityBtn').classList.remove('btnSelected');
+        } else if (props.TrackItemMode === 'popularity'){
+            document.getElementById('sortTracksPopularityBtn').classList.add('btnSelected');
+            document.getElementById('sortTracksPlaysBtn').classList.remove('btnSelected');
+        }
+
+        tracksMap = props.sortedTracks[props.timeRange].map(track => {
+            return <Track track={track} key={track.playsRank}></Track>
+        }).splice(0, props.maxLength);
+        
+    }  else {
+        tracksMap = <p>{props.dataMessage}</p>
+    }
 
         props.TrackItemOrder === 'descending' 
                 ? orderBtn = 'arrow arrow-down' 
@@ -53,15 +63,10 @@ const Tracks = props => {
                     </button>
                 </div>
                 <div>
-                    {
-                            props.sortedTracks[props.timeRange].map(tracks => {
-                                return <Track track={tracks}></Track>
-                            }).splice(0, props.maxLength)
-                    }
+                    {tracksMap}
                 </div>
             </section>
         )
     }
-}
 
 export default Tracks;

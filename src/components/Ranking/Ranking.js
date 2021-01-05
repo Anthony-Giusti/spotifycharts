@@ -49,6 +49,7 @@ const Ranking = props => {
                 rankingSort={props.rankingSort}
                 ArtistItemMode={props.ArtistItemMode}
                 setArtistItemMode={props.setArtistItemMode}
+                dataMessage={props.dataMessage}
                 />
             <Tracks 
                 sortedTracks={props.sortedTracks}
@@ -57,7 +58,9 @@ const Ranking = props => {
                 TrackItemOrder={props.TrackItemOrder}
                 sortOrder={props.sortOrder}
                 rankingSort={props.rankingSort}
-                TrackItemMode={props.TrackItemMode}/>
+                TrackItemMode={props.TrackItemMode}
+                dataMessage={props.dataMessage}
+                />
         </section>
         </div>
     )

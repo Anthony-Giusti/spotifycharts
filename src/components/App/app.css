@@ -1,6 +1,6 @@
-/* *{
-      outline: solid var(--clr-dark) 2px;
-  } */
+*{
+      outline: solid var(--font-color-primary) 1px;
+  }
 
 :root {
     --ff-primary: 'Source Sans Pro', sans-serif;
@@ -57,6 +57,8 @@ body {
     font-family: var(--ff-primary);
     font-size: var(--fs-body);
     line-height: 1.6;
+
+   
 }
 
 button {
@@ -118,31 +120,6 @@ h3 {
 .arrow-down {
     transform: rotate(135deg);
 }
-
-/* .arrow-icon {
-    background-color: black;
-    height: 2.8em;
-    width: 2.8em;
-    display:block;
-    padding: 0.5em;
-    margin: 1em auto;
-    position: relative;
-    cursor: pointer;
-    border-radius: 4px;
-  } */
-/* 
-  .left-bar {
-    position: absolute;
-    background-color: transparent;
-    top: 0;
-    left:0;
-    width: 40px;
-    height: 10px;
-    display: block;
-    transform: rotate(35deg);
-    float: right;
-    border-radius: 2px;
-} */
 
 @media only screen and (max-width: 1400px) {
     .app {

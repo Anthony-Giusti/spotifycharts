@@ -5,39 +5,45 @@ import '../Ranking/Ranking.css'
 const Track = props => {
 
     return(
-            <div className='track'>
+            <div className='track' >
                 <div className='trackPhotoContainer'>
                     <a 
                         href={props.track.trackURL} 
-                        target='_blank'>
+                        target='_blank'
+                        rel='noreferrer'>
                             <img 
                                 className='trackPhoto'
-                                src={props.track.images[0].url}>
+                                src={props.track.images[0].url}
+                                alt={'Album cover for ' + props.track.name}>
                             </img>
                     </a>
                 </div>
                 <div className='trackInfo'>
-                    <div>
+                    <div className='trackHeaderContainer'>
                         <h3>
                             <a 
                                 href={props.track.trackURL}
-                                target='_blank'>{props.track.name}
-                            </a>
-                        </h3>
-                        <h4><a
+                                target='_blank'
+                                rel='noreferrer'>{props.track.name}
+                            </a> - &nbsp;  
+                            <a
                             href={props.track.artistURL}
-                            target='_blank'>
+                            target='_blank'
+                            rel='noreferrer'
+                            >
                                 {props.track.artists[0].name}
                             </a>
-                        </h4>
+                        </h3>
                     </div>
                     <div>
                         <p>Album: <a 
                             href={props.track.albumURL} 
-                            target='_blank'>{props.track.albumName}
+                            target='_blank'
+                            rel='noreferrer'>
+                                {props.track.albumName}
                             </a>
                         </p>
-                        {/* <p>Release: {props.track.releaseYear}</p> */}
+                        <p>Release: {props.track.releaseYear}</p>
                         <p>Your Play Rank : {props.track.playsRank}</p>
                         <p>Spotify Popularity Rating: {props.track.popularity}</p>
                     </div> 

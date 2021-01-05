@@ -19,14 +19,14 @@ const Spotify = {
             window.history.pushState('Access Token', null, '/');
             return accessToken;
         } else {
-            const accessUrl =  `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=user-top-read&redirect_uri=${redirectUri}`;
+            const accessUrl =  `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=user-top-read&redirect_uri=${redirectUri}&show_dialog=true`;
             window.location = accessUrl;
         }
     },
-    async getTopTracks() {
+    async getSpotifyData() {
         const accessToken = Spotify.getAccessToken();
         let type = 'artists';
-        let artistData = [];
+        let spotifyData = [];
         let timeRange = '';
         
         for (let u = 0; u < 2; u ++){
@@ -63,12 +63,12 @@ const Spotify = {
                 } }).then(response => {
                     return response.json();
                 }).then(jsonResponse => {
-                    console.log(jsonResponse);
                     if(jsonResponse.items <= 0){
                         return;
                     }
+                    console.log(jsonResponse);
                     if (jsonResponse.items[0].type === 'artist'){
-                        artistData.push(jsonResponse.items.map( artist => ({
+                        spotifyData.push(jsonResponse.items.map( artist => ({
                             name: artist.name,
                             playsRank: null,
                             href: artist.href,
@@ -84,7 +84,7 @@ const Spotify = {
                             uri: artist.uri,
                             artistURL: artist.external_urls.spotify
                     })));} else if (jsonResponse.items[0].type === 'track'){
-                        artistData.push(jsonResponse.items.map( track => ({
+                        spotifyData.push(jsonResponse.items.map( track => ({
                             name: track.name,
                             artists: track.artists,
                             albumName: track.album.name,
@@ -105,8 +105,7 @@ const Spotify = {
             });
         }
     }
-        console.log(artistData);
-        return artistData;
+        return spotifyData;
     }
 }
 

@@ -9,19 +9,19 @@ import '../../normalize.css';
 import './app.css';
 
 const App = () => {
-const [sortedArtists, setSortedArtists] = useState([]);
-const [sortedTracks, setSortedTracks] = useState([]);
-const [sortedGenres, setSortedGenres] = useState([]);
-const [timeRange, setTimeRange] = useState(0);
-const [maxLength, setMaxLength] = useState(5);
-const [ArtistItemOrder, setArtistItemOrder] = useState('descending');
-const [TrackItemOrder, setTrackItemOrder] = useState('descending');
-const [ArtistItemMode, setArtistItemMode] = useState('playsRank');
-const [TrackItemMode, setTrackItemMode] = useState('popularity');
-const [averageArtistPopularity, setAverageArtistPopularity] = useState();
-const [averageTrackPopularity, setAverageTrackPopularity] = useState();
-const [animate, setAnimate] = useState(true);
-const [dataMessage, setDataMessage] = useState('No data loaded...')
+    const [sortedArtists, setSortedArtists] = useState([]);
+    const [sortedTracks, setSortedTracks] = useState([]);
+    const [sortedGenres, setSortedGenres] = useState([]);
+    const [timeRange, setTimeRange] = useState(0);
+    const [maxLength, setMaxLength] = useState(5);
+    const [ArtistItemOrder, setArtistItemOrder] = useState('descending');
+    const [TrackItemOrder, setTrackItemOrder] = useState('descending');
+    const [ArtistItemMode, setArtistItemMode] = useState('plays');
+    const [TrackItemMode, setTrackItemMode] = useState('plays');
+    const [averageArtistPopularity, setAverageArtistPopularity] = useState();
+    const [averageTrackPopularity, setAverageTrackPopularity] = useState();
+    const [animate, setAnimate] = useState(true);
+    const [dataMessage, setDataMessage] = useState('No data found...');
 
     const changeTimeRange = e => {
         setAnimate(true);
@@ -69,11 +69,17 @@ const [dataMessage, setDataMessage] = useState('No data loaded...')
         if (e.target.classList.contains('artistsSortBtn')){
             sort = [...sortedArtists];
             sortTarget = setSortedArtists;
-            itemOrderSort = ArtistItemOrder === 'ascending' ? true : false; 
+            itemOrderSort = ArtistItemOrder === 'ascending' ? true : false;
+            e.target.id === 'sortArtistsPopularityBtn' 
+                ? setArtistItemMode('popularity') 
+                : setArtistItemMode('plays')
         } else if (e.target.classList.contains('tracksSortBtn')){
             sort = [...sortedTracks];
             sortTarget = setSortedTracks;
-            itemOrderSort = TrackItemOrder === 'ascending' ? true : false; 
+            itemOrderSort = TrackItemOrder === 'ascending' ? true : false;
+            e.target.id === 'sortTracksPopularityBtn' 
+                ? setTrackItemMode('popularity') 
+                : setTrackItemMode('plays') 
         }
 
         if (e.target.classList.contains('sortPlaysBtn')){
@@ -171,10 +177,10 @@ const [dataMessage, setDataMessage] = useState('No data loaded...')
         let artistData = [];
         let trackData = [];
         setAnimate(true);
-        Spotify.getTopTracks().then(spotifyResponse => {
+
+        Spotify.getSpotifyData().then(spotifyResponse => {
             for (let a = 0; a < spotifyResponse.length; a++){
                 for (let b = 0; b < spotifyResponse[a].length; b++){
-                    // spotifyResponse[a][b].rank = b + 1;
                     spotifyResponse[a][b].playsRank = b + 1;
                 }
             }
@@ -190,10 +196,7 @@ const [dataMessage, setDataMessage] = useState('No data loaded...')
             setArtistItemOrder('descending');
             setSortedArtists(artistData);
             setSortedTracks(trackData);
-            });
-            if (sortedArtists.length === 0 || sortedTracks.length === 0) {
-                setDataMessage('Insufficient Spotify Data!')
-            }
+            })
     }
 
     const getExampleData = (e) => {
@@ -208,19 +211,17 @@ const [dataMessage, setDataMessage] = useState('No data loaded...')
     // optimize this!
     useEffect(() => {
            getFavoirteGenres();
-        }, [sortedTracks]);
-        
+        }, [sortedTracks], []);
 
     return (
         <div className='app'>
             <Stats 
                 sortedGenres={sortedGenres}
-                timeRange={timeRange}
                 averageArtistPopularity={averageArtistPopularity}
                 averageTrackPopularity={averageTrackPopularity}
                 changeTimeRange={changeTimeRange}
-                getSpotifyData={getSpotifyData}
                 timeRange={timeRange}
+                getSpotifyData={getSpotifyData}
                 getExampleData={getExampleData}
                 animate={animate}
                 dataMessage={dataMessage}
@@ -238,6 +239,7 @@ const [dataMessage, setDataMessage] = useState('No data loaded...')
                 rankingSort={rankingSort}
                 ArtistItemMode={ArtistItemMode}
                 setArtistItemMode={setArtistItemMode}
+                dataMessage={dataMessage}
                 TrackItemMode={TrackItemMode}/>
         </div>
     )

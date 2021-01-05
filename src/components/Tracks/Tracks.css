@@ -26,4 +26,18 @@
 }
 
 
-/*  */
+@media only screen and (max-width: 500px) {
+   .trackButtons{
+      /* display: flex; */
+      flex-wrap: wrap;
+      width: 100%;
+   }
+
+   .trackButtons button {
+      margin: 0.5em auto;
+   }
+
+   .tracksHeader {
+      width: auto;
+   }
+}

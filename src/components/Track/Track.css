@@ -1,3 +1,5 @@
+
+
 .track {
     width: 95%;
     height: 12em;
@@ -8,8 +10,6 @@
     margin: 0.7em auto;
     border-radius: 2em;
 }
-
-
 
 .trackPhotoContainer {
     max-width: 12em;
@@ -46,15 +46,33 @@
         padding-left: 0.9em;
 }
 
-
 @media only screen and (max-width: 750px){
     .track{
-        font-size: 0.8em;
+        /* font-size: 0.8em; */
         height: 17em;
+        pointer-events: none;
     }
 
     .trackPhotoContainer {
-        max-width: 17em;
+        max-width: 11em;
         max-height: 17em; 
+     }
+}
+
+@media only screen and (max-width: 600px) {
+    .track {
+        font-size: 0.9em;
     }
+
+    .trackPhotoContainer {
+        max-width: 25%;
+        max-height: 17em;
+     }
+}
+
+@media only screen and (max-width: 400px) {
+    .track {
+        font-size: 0.8em;
+    }
+
 }

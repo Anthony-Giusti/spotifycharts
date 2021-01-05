@@ -3,16 +3,17 @@ import './Stats.css';
 
 import GenreChart from '../GenreChart/GenreChart';
 import PopularityStats from '../PopularityStats/PopularityStats';
-import TimeRange from '../TimeRange/TimeRange';
+import ControlPanel from '../ControlPanel/ControlPanel';
 
 const Stats = props =>{
     return(
         <section className='statsContainer'>
-            <TimeRange 
+            <ControlPanel 
                 changeTimeRange={props.changeTimeRange}
                 timeRange={props.timeRange}
                 getSpotifyData={props.getSpotifyData}
                 getExampleData={props.getExampleData}
+                cancelAccessToken={props.cancelAccessToken}
             />
             <GenreChart 
                 sortedGenres={props.sortedGenres}
@@ -25,7 +26,7 @@ const Stats = props =>{
                 averageTrackPopularity={props.averageTrackPopularity}
                 timeRange={props.timeRange}
                 sortedGenres={props.sortedGenres}
-                timeRange={props.timeRange}
+                dataMessage={props.dataMessage}
             />
         </section>
     )

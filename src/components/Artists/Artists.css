@@ -24,3 +24,20 @@
    margin-top: 0em;
    margin-bottom: 0.45em;
 }
+
+@media only screen and (max-width: 500px) {
+   .artistButtons{
+      /* display: flex; */
+      flex-wrap: wrap;
+      width: 100%;
+   }
+
+   .artistButtons button {
+      margin: 0.5em auto;
+   }
+
+   .artistsHeader {
+      width: auto;
+   }
+
+}

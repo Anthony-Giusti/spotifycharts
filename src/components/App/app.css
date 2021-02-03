@@ -1,7 +1,3 @@
-*{
-      outline: solid var(--font-color-primary) 1px;
-  }
-
 :root {
     --ff-primary: 'Source Sans Pro', sans-serif;
     --ff-secondary: 'Source Sans Pro', monospace;

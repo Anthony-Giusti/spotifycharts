@@ -21,7 +21,7 @@ const App = () => {
     const [averageArtistPopularity, setAverageArtistPopularity] = useState();
     const [averageTrackPopularity, setAverageTrackPopularity] = useState();
     const [animate, setAnimate] = useState(true);
-    const [dataMessage, setDataMessage] = useState('No data found...');
+    const [dataMessage] = useState('No data found...');
 
     const changeTimeRange = e => {
         setAnimate(true);

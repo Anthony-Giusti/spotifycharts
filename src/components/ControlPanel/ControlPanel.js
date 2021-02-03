@@ -51,18 +51,13 @@ const ControlPanel = props => {
                     This will only account for your top 50 most played artists and tracks in each given
                     time range. This app will be more effective with using a frequently used acccount.
                     To see an example of this looks like with a frequently used account click the 
-                    example button or look at the readme at the GitHub for more information</p>
+                    example button.</p>
             </div> 
             <button
                     className='dataBtn'
                     id='loadExampleDataBtn'
                     onClick={props.getExampleData}>
                     Load Example Data
-            </button>
-            <button
-                    className=''
-                    id=''>
-                    GitHub
             </button>
             <div className="switch">
                 <input id="theme-toggle" type="checkbox" />

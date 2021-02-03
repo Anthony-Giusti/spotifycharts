@@ -42,7 +42,7 @@
         transition-duration: 250ms;
         background-image: -webkit-linear-gradient(left, var(--accent),rgba(152, 160, 181, 0.151), transparent 30%, transparent 100%);
         box-shadow: 0 0 0 1.25pt var(--accent);
-        -webkit-transform: scale(1.035);
+        transform: scale(1.035);
         padding-left: 0.9em;
 }
 

@@ -1,5 +1,5 @@
 const clientId = '1552527e4fb6490facd4fd8f368a6205';
-const redirectUri = 'http://localhost:3000/';
+const redirectUri = 'https://spotifycharts-buy3hd89y.vercel.app/';
 let accessToken;
 
 const Spotify = {

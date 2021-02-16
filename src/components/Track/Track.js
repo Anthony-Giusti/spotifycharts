@@ -1,55 +1,49 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './Track.css';
-import '../Ranking/Ranking.css'
+import '../Ranking/Ranking.css';
 
-const Track = props => {
+const Track = ({ track }) => (
+  <div className="track">
+    <div className="trackPhotoContainer">
+      <a href={track.trackURL} target="_blank" rel="noreferrer">
+        <img
+          className="trackPhoto"
+          src={track.images[0].url}
+          alt={`Album cover for ${track.name}`}
+        />
+      </a>
+    </div>
+    <div className="trackInfo">
+      <div className="trackHeaderContainer">
+        <h3>
+          <a href={track.trackURL} target="_blank" rel="noreferrer">
+            {track.name}
+          </a>{' '}
+          - &nbsp;
+          <a href={track.artistURL} target="_blank" rel="noreferrer">
+            {track.artists[0].name}
+          </a>
+        </h3>
+      </div>
+      <div>
+        <p>
+          Album:{' '}
+          <a href={track.albumURL} target="_blank" rel="noreferrer">
+            {track.albumName}
+          </a>
+        </p>
+        <p>Release: {track.releaseYear}</p>
+        <p>Your Play Rank : {track.playsRank}</p>
+        <p>Spotify Popularity Rating: {track.popularity}</p>
+      </div>
+    </div>
+  </div>
+);
 
-    return(
-            <div className='track' >
-                <div className='trackPhotoContainer'>
-                    <a 
-                        href={props.track.trackURL} 
-                        target='_blank'
-                        rel='noreferrer'>
-                            <img 
-                                className='trackPhoto'
-                                src={props.track.images[0].url}
-                                alt={'Album cover for ' + props.track.name}>
-                            </img>
-                    </a>
-                </div>
-                <div className='trackInfo'>
-                    <div className='trackHeaderContainer'>
-                        <h3>
-                            <a 
-                                href={props.track.trackURL}
-                                target='_blank'
-                                rel='noreferrer'>{props.track.name}
-                            </a> - &nbsp;  
-                            <a
-                            href={props.track.artistURL}
-                            target='_blank'
-                            rel='noreferrer'
-                            >
-                                {props.track.artists[0].name}
-                            </a>
-                        </h3>
-                    </div>
-                    <div>
-                        <p>Album: <a 
-                            href={props.track.albumURL} 
-                            target='_blank'
-                            rel='noreferrer'>
-                                {props.track.albumName}
-                            </a>
-                        </p>
-                        <p>Release: {props.track.releaseYear}</p>
-                        <p>Your Play Rank : {props.track.playsRank}</p>
-                        <p>Spotify Popularity Rating: {props.track.popularity}</p>
-                    </div> 
-                </div>
-            </div>
-    )
-}
+Track.propTypes = {
+  track: PropTypes.object.isRequired,
+};
 
 export default Track;
